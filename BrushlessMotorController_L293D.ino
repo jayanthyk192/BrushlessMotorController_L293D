@@ -46,7 +46,7 @@ SOFTWARE.
 #define Ph_B 1
 #define Ph_C 2
 
-char disableMosfets = 1; // Set this to 1 to disable all the mosfets
+char disableMosfets = 0; // Set this to 1 to disable all the mosfets
 
 void setup() {
   // Set these pins as output
