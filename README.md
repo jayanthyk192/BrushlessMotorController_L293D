@@ -1,4 +1,4 @@
-/* Tested with Arduino Uno.
+ * Tested with Arduino Uno.
  * 
  * This runs the motor in full voltage and does not have a PWM voltage control.
  * 
@@ -11,4 +11,4 @@
  * 
  * DO_NOT run the motor without the 100uF capacitor shown in the schematic, 
  * you'll kill the L293Ds very soon!
- */
+ *
