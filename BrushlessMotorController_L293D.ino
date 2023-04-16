@@ -68,7 +68,7 @@ void waitBEMF(int BEMF_n) {
   while (!(ACSR & (1 << ACO))); //Wait till the comparator changes from 0 to 1                                
 }
 
-void setPhasesPWM(int Ph_high, int Ph_low) {
+void setPhases(int Ph_high, int Ph_low) {
   //Set all the Enable pins on L293D to low
   digitalWrite(En_A_pin, LOW);
   digitalWrite(En_B_pin, LOW);
@@ -118,7 +118,6 @@ void mydelay(long del) {
   delayMicroseconds(del % 16000);
 }
 
-
 void runMotor() {
   /* Run the motor in half step mode. Switching sequence:
       Positive    Negative    Open
@@ -127,12 +126,13 @@ void runMotor() {
          C           A          B   
   */
   while (1) {
-    setPhasesPWM(Ph_A, Ph_B);
+    setPhases(Ph_A, Ph_B);
     waitBEMF(Ph_C);
-    setPhasesPWM(Ph_B, Ph_C);
+    setPhases(Ph_B, Ph_C);
     waitBEMF(Ph_A);
-    setPhasesPWM(Ph_C, Ph_A);
+    setPhases(Ph_C, Ph_A);
     waitBEMF(Ph_B);   
+    Serial.println('b');
   }
 }
 
@@ -143,7 +143,7 @@ void setupComparator() {
 }
 
 void test_phases() {
-  setPhasesPWM(Ph_B, Ph_C);
+  setPhases(Ph_B, Ph_C);
   while (1) {
     ADMUX = Ph_A;
     digitalRead(9);
@@ -153,13 +153,13 @@ void test_phases() {
 }
 
 void startMotor(){
-  long del = 80000; //Set this depending on the motor.
-  while((del-=400) > 40000){
-    setPhasesPWM(Ph_A, Ph_B);
+  long del = 120000; //Set this depending on the motor.
+  while((del-=2000) > 50000){
+    setPhases(Ph_A, Ph_B);
     mydelay(del);
-    setPhasesPWM(Ph_B, Ph_C);
+    setPhases(Ph_B, Ph_C);
     mydelay(del);
-    setPhasesPWM(Ph_C, Ph_A);
+    setPhases(Ph_C, Ph_A);
     mydelay(del);
   }
 }
